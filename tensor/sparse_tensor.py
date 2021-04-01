@@ -90,11 +90,56 @@ if __name__ == "__main__":
     # st2_plus_5 = tf.sparse.map_values(tf.add, st2, 5)
     # print(tf.sparse.to_dense(st2_plus_5))   # only the nonzero values were modified
 
-    # // 只有非0 值被修改
+    # 只有非0 值被修改
     st2_plus_5 = tf.SparseTensor(st2.indices,
                                  st2.values + 5,
                                  st2.dense_shape)
     print(tf.sparse.to_dense(st2_plus_5))
+
+    # 7) Using tf.SparseTensor with other TensorFlow APIs
+    # ----------------------------------------------------------------
+    # 7.1 tf.keras
+    x = tf.keras.Input(shape=(4,), sparse=True)
+    y = tf.keras.layers.Dense(4)(x)
+    model = tf.keras.Model(x, y)
+
+    sparse_data = tf.SparseTensor(indices=[(0, 0), (0, 1), (0, 2),
+                                           (4, 3), (5, 0), (5, 1)],
+                                  values=[1, 1, 1, 1, 1, 1],
+                                  dense_shape=(6, 4))
+    print(tf.sparse.to_dense(sparse_data))
+    model(sparse_data)
+    predict_res = model.predict(sparse_data)
+    print(predict_res)
+    # tf.keras.utils.plot_model(model, "model.png", show_shapes=True)
+    # ----------------------------------------------------------------
+    # 7.2 tf.data
+    # ----------------------------------------------------------------
+    # Building datasets with sparse tensor
+    dataset = tf.data.Dataset.from_tensor_slices(sparse_data)
+    for element in dataset:
+        print(element)   # 打印每一行 sparse tensor
+
+    # Batching and unbatching datasets with sparse tensor
+    batched_dataset = dataset.batch(2)
+    for element in batched_dataset:
+        print(element)   # 批量打印，batch = 2; 两组为一批
+
+    # Transforming Datasets with sparse tensor
+    print("----------------------------")
+    for element in dataset:
+        print("origin element is :", tf.sparse.to_dense(element))
+
+    transform_dataset = dataset.map(lambda x: x * 8)
+    for i in transform_dataset:
+        print("after transformer is :", tf.sparse.to_dense(i))
+
+
+
+
+
+
+
 
 
 
