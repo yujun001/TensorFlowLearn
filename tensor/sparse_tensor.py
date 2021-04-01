@@ -134,6 +134,23 @@ if __name__ == "__main__":
     for i in transform_dataset:
         print("after transformer is :", tf.sparse.to_dense(i))
 
+    # --------------------------------------------------------------
+    # 7.3 tf.function
+    # --------------------------------------------------------------
+    # substantially improve the performance of your TensorFlow code
+    @tf.function
+    def f(x,y):
+        return tf.sparse.sparse_dense_matmul(x, y)
+
+    a = tf.SparseTensor(indices=[[0, 3], [2, 4]],
+                        values=[15, 25],
+                        dense_shape=[3, 10])
+    b = tf.sparse.to_dense(tf.sparse.transpose(a))  # 转秩了
+    c = f(a, b)                                     # 稀疏矩阵乘 dense矩阵, 得到结果是dense tensor
+    c_1 = tf.sparse.from_dense(c)
+    print("dense tensor is :", c)
+    print("sparse tensro is :", c_1)
+
 
 
 
