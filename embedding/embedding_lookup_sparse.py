@@ -35,14 +35,15 @@ get_embedding2 = tf.nn.embedding_lookup(embedding, feature_batch)
 
 if __name__ == "__main__":
 
-    # origin sparse data
-    print("sparse example: ", example2)
-
-    # sparse to dense
-    spare_to_dense = tf.sparse.to_dense(example2)
-    print("dense example: ", spare_to_dense)
+    # # origin sparse data
+    # print("sparse example: ", example2)
+    #
+    # # sparse to dense
+    # spare_to_dense = tf.sparse.to_dense(example2)
+    # print("dense example: ", spare_to_dense)
 
     # embedding matmul
+    print(feature_batch_one_hot)
     print(get_embedding1)
     print(get_embedding2)
 
