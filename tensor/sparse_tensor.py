@@ -151,6 +151,18 @@ if __name__ == "__main__":
     print("dense tensor is :", c)
     print("sparse tensro is :", c_1)
 
+    # --------------------------------------------------------------
+    # 7.4 missing  &  zero
+    # --------------------------------------------------------------
+    # Distinguishing missing values from zero values
+    print(tf.sparse.reduce_max(tf.sparse.from_dense([-5, 0, -3])))
+    print(tf.math.reduce_max([-5, 0, -3]))
+    # output
+    # tf.Tensor(-3, shape=(), dtype=int32)
+    # tf.Tensor(0, shape=(), dtype=int32)
+
+
+
 
 
 
