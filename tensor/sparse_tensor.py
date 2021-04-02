@@ -4,6 +4,8 @@
 @Time    : 2021/4/1 下午4:00
 @Author  : YuJun
 @FileName: sparse_tensor.py
+
+sparse tensor 稀疏矩阵的用法
 """
 
 import tensorflow as tf
