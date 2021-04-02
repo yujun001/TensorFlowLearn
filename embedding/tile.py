@@ -27,6 +27,7 @@ if __name__ == "__main__":
     b1 = tf.tile(b, multiples=[2, 3])  # 第一个维度扩充2遍，第二个维度扩充3遍
 
     print(a1, '\n', b1)
+    print(b.shape)
     # tf.Tensor([ 7 19  7 19  7 19], shape=(6,), dtype=int32)
 
     #  tf.Tensor(
